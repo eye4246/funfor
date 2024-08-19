@@ -34,6 +34,11 @@
         .percentage {
             background-color: #1e81b0;
         }
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -52,6 +57,8 @@
 
         <button type="submit">Add</button> <!-- Changed the button label here -->
     </form>
+
+    <div id="error-message" class="error-message"></div> <!-- Error message container -->
 
     <h2>Results</h2>
     <table>
