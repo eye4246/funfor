@@ -46,8 +46,9 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
             const eventStats = await fetch(`https://www.thesportsdb.com/api/v1/json/${apiKey}/lookupeventstats.php?id=${event.idEvent}`)
                 .then(response => response.json())
                 .then(data => {
-                    // Check if playerstats exists
-                    if (!data.playerstats) throw new Error('No stats found for the event');
+                    if (!data.playerstats || !Array.isArray(data.playerstats)) {
+                        throw new Error('No stats found for the event or unexpected data structure');
+                    }
                     return data.playerstats.find(stat => stat.idPlayer === playerId);
                 });
             
