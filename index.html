@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player Stats Calculator</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="path/to/your/favicon.ico" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #000000; /* Set background color to black */
-            color: #ffffff; /* Set text color to white */
+            background-color: #1e1e1e;
+            color: #ffffff;
         }
         table {
             width: 100%;
@@ -34,23 +35,20 @@
         .percentage {
             background-color: #1e81b0;
         }
-        .error-message {
+        #error-message {
             color: red;
-            font-weight: bold;
             margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <h1>Player Stats Calculator</h1>
-
-    <!-- Input Form -->
     <form id="statsForm">
         <label for="teamName">Team Name:</label>
-        <input type="text" id="teamName" placeholder="e.g., Los Angeles Lakers" required><br><br>
+        <input type="text" id="teamName" placeholder="e.g., Los Angeles Lakers"><br><br>
 
         <label for="playerName">Player Name:</label>
-        <input type="text" id="playerName" placeholder="e.g., LeBron James" required><br><br>
+        <input type="text" id="playerName" placeholder="e.g., LeBron James"><br><br>
 
         <label for="statType">Stat Type:</label>
         <select id="statType">
@@ -60,12 +58,11 @@
         </select><br><br>
 
         <label for="line">Line (e.g., Points):</label>
-        <input type="number" id="line" placeholder="e.g., 20.5" required><br><br>
+        <input type="number" id="line" placeholder="20.5"><br><br>
 
-        <button type="submit">Add</button> <!-- Changed the button label here -->
+        <button type="submit">Add</button>
+        <div id="error-message"></div>
     </form>
-
-    <div id="error-message" class="error-message"></div> <!-- Error message container -->
 
     <h2>Results</h2>
     <table>
@@ -88,7 +85,7 @@
             </tr>
         </thead>
         <tbody id="results">
-            <!-- Results will be dynamically inserted here -->
+            <!-- Results will be appended here -->
         </tbody>
     </table>
 
