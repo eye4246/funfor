@@ -3,24 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Stats</title>
+    <title>Player Stats Calculator</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000; /* Set background color to black */
+            color: #ffffff; /* Set text color to white */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 12px;
+        }
+        th, td {
+            border: 1px solid #444444;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #333333;
+        }
+        td {
+            background-color: #2d2d2d;
+        }
+        .highlight {
+            background-color: #3a3a3a;
+        }
+        .percentage {
+            background-color: #1e81b0;
+        }
+    </style>
 </head>
 <body>
     <h1>Player Stats Calculator</h1>
+
+    <!-- Input Form -->
     <form id="statsForm">
-        <label for="playerName">Player Name:</label>
-        <input type="text" id="playerName" required><br><br>
-
         <label for="teamName">Team Name:</label>
-        <input type="text" id="teamName" required><br><br>
+        <input type="text" id="teamName" placeholder="e.g., Los Angeles Lakers" required><br><br>
 
-        <label for="line">Line (e.g., Strikeouts):</label>
-        <input type="number" id="line" required><br><br>
+        <label for="playerName">Player Name:</label>
+        <input type="text" id="playerName" placeholder="e.g., LeBron James" required><br><br>
+
+        <label for="line">Line (e.g., Points):</label>
+        <input type="number" id="line" placeholder="e.g., 20.5" required><br><br>
 
         <button type="submit">Calculate Stats</button>
     </form>
-    
+
     <h2>Results</h2>
     <table>
         <thead>
