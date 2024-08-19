@@ -46,7 +46,9 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
             const eventStats = await fetch(`https://www.thesportsdb.com/api/v1/json/${apiKey}/lookupeventstats.php?id=${event.idEvent}`)
                 .then(response => response.json())
                 .then(data => {
+                    console.log('API response:', data); // Log the API response to inspect it
                     if (!data.playerstats || !Array.isArray(data.playerstats)) {
+                        console.error('Unexpected data structure:', data);
                         throw new Error('No stats found for the event or unexpected data structure');
                     }
                     return data.playerstats.find(stat => stat.idPlayer === playerId);
@@ -111,6 +113,7 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
         document.getElementById('results').innerHTML = results;
         errorMessageElement.innerText = ''; // Clear any previous error message
     } catch (error) {
+        console.error(error);
         errorMessageElement.innerText = `Error: ${error.message}`; // Display error message in red
     }
 });
