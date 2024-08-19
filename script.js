@@ -3,6 +3,7 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
     
     let playerName = document.getElementById('playerName').value;
     let teamName = document.getElementById('teamName').value;
+    const statType = document.getElementById('statType').value;
     const line = parseFloat(document.getElementById('line').value);
     const errorMessageElement = document.getElementById('error-message');
 
@@ -51,28 +52,37 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
                 });
             
             if (eventStats) {
-                const points = parseFloat(eventStats.intPoints) || 0;
+                let statValue = 0;
 
-                if (points >= line) {
-                    const diff = points - line;
+                // Determine the stat value based on the selected stat type
+                if (statType === "Points") {
+                    statValue = parseFloat(eventStats.intPoints) || 0;
+                } else if (statType === "Assists") {
+                    statValue = parseFloat(eventStats.intAssists) || 0;
+                } else if (statType === "Rebounds") {
+                    statValue = parseFloat(eventStats.intRebounds) || 0;
+                }
+
+                if (statValue >= line) {
+                    const diff = statValue - line;
                     const diffPercent = ((diff / line) * 100).toFixed(2);
-                    const overUnder = points > line ? 'Over' : 'Equal';
+                    const overUnder = statValue > line ? 'Over' : 'Equal';
 
-                    totalPoints += points;
+                    totalPoints += statValue;
                     countGames++;
-                    if (points > line) totalOver++;
+                    if (statValue > line) totalOver++;
 
                     results += `
                         <tr>
                             <td>${playerName}</td>
-                            <td>Points</td>
+                            <td>${statType}</td>
                             <td>${teamName}</td>
                             <td>${event.strAwayTeam || 'Unknown'}</td>
                             <td>${eventStats.strPosition}</td>
                             <td>${line}</td>
                             <td>${overUnder}</td>
                             <td class="highlight">N/A</td>
-                            <td class="highlight">${points.toFixed(2)}</td>
+                            <td class="highlight">${statValue.toFixed(2)}</td>
                             <td class="highlight">${diff.toFixed(2)}</td>
                             <td class="percentage">${diffPercent}%</td>
                             <td class="percentage">N/A</td>
