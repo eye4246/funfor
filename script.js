@@ -52,8 +52,11 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
                         throw new Error('No stats found for the event or unexpected data structure');
                     }
                     return data.playerstats.find(stat => stat.idPlayer === playerId);
+                }).catch(error => {
+                    console.error('Error fetching event stats:', error);
+                    throw new Error('Error retrieving stats for the selected event.');
                 });
-            
+
             if (eventStats) {
                 let statValue = 0;
 
