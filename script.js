@@ -1,10 +1,14 @@
 document.getElementById('statsForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    const playerName = document.getElementById('playerName').value;
-    const teamName = document.getElementById('teamName').value;
+    let playerName = document.getElementById('playerName').value;
+    let teamName = document.getElementById('teamName').value;
     const line = parseFloat(document.getElementById('line').value);
     const errorMessageElement = document.getElementById('error-message');
+
+    // Replace spaces with underscores
+    playerName = playerName.replace(/\s+/g, '_');
+    teamName = teamName.replace(/\s+/g, '_');
 
     const apiKey = '744155'; // Your actual API key
     let playerId, teamId;
