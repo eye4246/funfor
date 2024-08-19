@@ -5,7 +5,7 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
     const teamName = document.getElementById('teamName').value;
     const line = parseFloat(document.getElementById('line').value);
 
-    const apiKey = 'YOUR_API_KEY';
+    const apiKey = '744155'; // Your actual API key
     let playerId, teamId;
 
     // Fetch team ID
@@ -23,10 +23,6 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
         .then(response => response.json())
         .then(data => data.results.slice(0, 10));
 
-    // Initialize variables to calculate projections, etc.
-    let totalPoints = 0;
-    let totalGames = 0;
-    
     let results = '';
 
     for (const event of events) {
@@ -36,33 +32,29 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
         
         if (eventStats) {
             const points = parseFloat(eventStats.intPoints) || 0;
-            totalPoints += points;
-            totalGames++;
 
-            const diff = points - line;
-            const diffPercent = ((diff / line) * 100).toFixed(2);
-
-            results += `
-                <tr>
-                    <td>${playerName}</td>
-                    <td>Points</td>
-                    <td>${teamName}</td>
-                    <td>${event.strAwayTeam || 'Unknown'}</td>
-                    <td>${eventStats.strPosition}</td>
-                    <td>${line}</td>
-                    <td>${points > line ? 'Over' : 'Under'}</td>
-                    <td class="highlight">N/A</td>
-                    <td class="highlight">${points.toFixed(2)}</td>
-                    <td class="highlight">${diff.toFixed(2)}</td>
-                    <td class="percentage">${diffPercent}%</td>
-                    <td class="percentage">N/A</td>
-                    <td class="percentage">N/A</td>
-                    <td class="percentage">N/A</td>
-                </tr>
-            `;
+            if (points >= line) {
+                results += `
+                    <tr>
+                        <td>${playerName}</td>
+                        <td>Points</td>
+                        <td>${teamName}</td>
+                        <td>${event.strAwayTeam || 'Unknown'}</td>
+                        <td>${eventStats.strPosition}</td>
+                        <td>${line}</td>
+                        <td>${points > line ? 'Over' : 'Equal'}</td>
+                        <td class="highlight">N/A</td>
+                        <td class="highlight">${points.toFixed(2)}</td>
+                        <td class="highlight">${(points - line).toFixed(2)}</td>
+                        <td class="percentage">${(((points - line) / line) * 100).toFixed(2)}%</td>
+                        <td class="percentage">N/A</td>
+                        <td class="percentage">N/A</td>
+                        <td class="percentage">N/A</td>
+                    </tr>
+                `;
+            }
         }
     }
 
     document.getElementById('results').innerHTML = results;
 });
-
