@@ -44,7 +44,11 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
         for (const event of events) {
             const eventStats = await fetch(`https://www.thesportsdb.com/api/v1/json/${apiKey}/lookupeventstats.php?id=${event.idEvent}`)
                 .then(response => response.json())
-                .then(data => data.playerstats.find(stat => stat.idPlayer === playerId));
+                .then(data => {
+                    // Check if playerstats exists
+                    if (!data.playerstats) throw new Error('No stats found for the event');
+                    return data.playerstats.find(stat => stat.idPlayer === playerId);
+                });
             
             if (eventStats) {
                 const points = parseFloat(eventStats.intPoints) || 0;
