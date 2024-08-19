@@ -23,6 +23,10 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
         .then(response => response.json())
         .then(data => data.results.slice(0, 10));
 
+    let totalPoints = 0;
+    let countGames = 0;
+    let totalOver = 0;
+    
     let results = '';
 
     for (const event of events) {
@@ -34,6 +38,14 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
             const points = parseFloat(eventStats.intPoints) || 0;
 
             if (points >= line) {
+                const diff = points - line;
+                const diffPercent = ((diff / line) * 100).toFixed(2);
+                const overUnder = points > line ? 'Over' : 'Equal';
+
+                totalPoints += points;
+                countGames++;
+                if (points > line) totalOver++;
+
                 results += `
                     <tr>
                         <td>${playerName}</td>
@@ -42,11 +54,11 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
                         <td>${event.strAwayTeam || 'Unknown'}</td>
                         <td>${eventStats.strPosition}</td>
                         <td>${line}</td>
-                        <td>${points > line ? 'Over' : 'Equal'}</td>
+                        <td>${overUnder}</td>
                         <td class="highlight">N/A</td>
                         <td class="highlight">${points.toFixed(2)}</td>
-                        <td class="highlight">${(points - line).toFixed(2)}</td>
-                        <td class="percentage">${(((points - line) / line) * 100).toFixed(2)}%</td>
+                        <td class="highlight">${diff.toFixed(2)}</td>
+                        <td class="percentage">${diffPercent}%</td>
                         <td class="percentage">N/A</td>
                         <td class="percentage">N/A</td>
                         <td class="percentage">N/A</td>
@@ -55,6 +67,19 @@ document.getElementById('statsForm').addEventListener('submit', async function(e
             }
         }
     }
+
+    const averagePoints = (totalPoints / countGames).toFixed(2);
+    const overPercent = ((totalOver / countGames) * 100).toFixed(2);
+
+    results += `
+        <tr>
+            <td colspan="8"><strong>Totals / Averages</strong></td>
+            <td>${averagePoints}</td>
+            <td colspan="2"></td>
+            <td>${overPercent}%</td>
+            <td colspan="2"></td>
+        </tr>
+    `;
 
     document.getElementById('results').innerHTML = results;
 });
